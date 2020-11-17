@@ -6,8 +6,6 @@
 package pcarv.usedcardealer.controller;
 
 import java.util.List;
-import javax.swing.JOptionPane;
-import pcarv.usedcardealer.exception.EmptyListException;
 import pcarv.usedcardealer.exception.NoCarException;
 import pcarv.usedcardealer.model.Car;
 import pcarv.usedcardealer.model.CarList;
@@ -16,7 +14,7 @@ import pcarv.usedcardealer.view.View;
 /**
  *
  * @author Paweł Rykała
- * @version 1.5 
+ * @version 1.5
  */
 public class Controller {
 
@@ -76,7 +74,7 @@ public class Controller {
         } catch (NumberFormatException e) {
             view.badInputWarningInManageMenu();
         } catch (NoCarException e) {
-            view.noResultInManageMenu();
+            view.noResultInManageMenu(e.getMessage());
         }
     }
 
@@ -88,16 +86,14 @@ public class Controller {
         } catch (NumberFormatException e) {
             view.badInputWarningInManageMenu();
         } catch (NoCarException e) {
-            view.noResultInManageMenu();
-        } catch (EmptyListException e) {
-            view.noCarsFoundInfoInManageMenu();
+            view.noResultInManageMenu(e.getMessage());
         }
     }
 
     private void addCar() {
         String[] input = view.getTextFieldsDataFromManageMenu();
         try {
-            if (input.length == 7) {
+            if (input.length == 7 && Integer.parseInt(input[0]) > 0) {
                 if (!list.idExist(Integer.parseInt(input[0]))) {
                     Car result = new Car();
                     float newPrice = Float.parseFloat(input[1]);
@@ -106,40 +102,39 @@ public class Controller {
                     int newMileage = Integer.parseInt(input[6]);
                     boolean ok = true;
                     result.setId(Integer.parseInt(input[0]));
-                    if (!input[3].isEmpty()) {
+                    if (!input[3].isEmpty() && ok) {
                         result.setBrand(input[3]);
                     } else {
                         ok = false;
                     }
-                    if (!input[4].isEmpty()) {
+                    if (!input[4].isEmpty() && ok) {
                         result.setModel(input[4]);
                     } else {
                         ok = false;
                     }
-                    if (newPrice > 0) {
+                    if (newPrice > 0.0 && newPrice < 10000000.0 && ok) {
                         result.setPrice(newPrice);
                     } else {
                         ok = false;
                     }
-                    if (newYear >= 1900 && newYear <= 2020) {
+                    if (newYear >= 1900 && newYear <= 2020 && ok) {
                         result.setYear(newYear);
                     } else {
                         ok = false;
                     }
-                    if (newHp > 0) {
+                    if (newHp > 0 && newHp < 10000 && ok) {
                         result.setHorsepower(newHp);
                     } else {
                         ok = false;
                     }
-                    if (newMileage > 0) {
+                    if (newMileage > 0 && newMileage < 10000000 && ok) {
                         result.setMileage(newMileage);
                     } else {
                         ok = false;
                     }
                     if (ok) {
                         list.add(result);
-
-                        view.printCarInBrowseMenu(list.getCarById(Integer.parseInt(input[0])));
+                        view.printCarInManageMenu(list.getCarById(Integer.parseInt(input[0])));
                     } else {
                         view.badInputWarningInManageMenu();
                     }
@@ -152,21 +147,23 @@ public class Controller {
         } catch (NumberFormatException e) {
             view.badInputWarningInManageMenu();
         } catch (NoCarException e) {
-            //view.noResultInManageMenu();
-        } 
+            view.noResultInManageMenu(e.getMessage());
+        }
     }
 
     private void getSelectedCar() {
         String id = view.getIdTextFieldDataFromManageMenu();
         try {
-            if (list.idExist(Integer.parseInt(id))){
+            if (list.idExist(Integer.parseInt(id))) {
                 view.printCarInManageMenu(list.getCarById(Integer.parseInt(id)));
                 view.setTextFieldsInManageMenu(list.getCarById(Integer.parseInt(id)));
+            } else {
+                view.noResultInManageMenu("Car with selected id does not exist!");
             }
         } catch (NumberFormatException e) {
             view.badInputWarningInManageMenu();
         } catch (NoCarException e) {
-            view.noResultInManageMenu();
+            view.noResultInManageMenu(e.getMessage());
         }
     }
 
@@ -275,8 +272,8 @@ public class Controller {
             }
         } catch (CloneNotSupportedException e) {
             view.somethingWentWrongInBrowseMenu();
-        } catch (EmptyListException e) {
-            view.noResultsInBrowseMenuInfo();
+        } catch (NoCarException e) {
+            view.noResultsInBrowseMenuInfo(e.getMessage());
         }
     }
     /*

@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import pcarv.usedcardealer.model.Car;
 
-
 /**
+ *
  * @author Paweł Rykała
  * @version 1.0
  */
@@ -130,9 +130,11 @@ class ManageMenu extends JPanel {
         scroll.getViewport().setView(printField);
         this.add(scroll);
     }
-    String getIdTextFieldData(){
+
+    String getIdTextFieldData() {
         return idTextField.getText();
     }
+
     String[] getTextFieldsData() {
         String[] textEntered = {
             idTextField.getText(), priceTextField.getText(),

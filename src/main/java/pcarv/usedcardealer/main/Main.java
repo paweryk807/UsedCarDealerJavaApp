@@ -21,11 +21,9 @@ import pcarv.usedcardealer.view.View;
 import pcarv.usedcardealer.controller.Controller;
 
 /**
- * Prepares the program for action.
- * Validates input parameters. 
- * Initializes the database, controlle and view.
- * Passes database to model.
- * 
+ * Prepares the program for action. Validates input parameters. Initializes the
+ * database, controlle and view. Passes database to model.
+ *
  * @author Paweł Rykała
  * @version 2.0
  */
@@ -43,7 +41,8 @@ public class Main {
         JFrame frame = new JFrame();
         //JDialog dialog = new JDialog();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        //frame.pack();
+        //frame.setVisible(true);
         if (args.length == 0) {
             try {
                 filename = JOptionPane.showInputDialog("Enter the file path");
@@ -53,8 +52,6 @@ public class Main {
                 } else {
                     JOptionPane.showMessageDialog(frame, "database file not specified", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                frame.pack();
-                frame.setVisible(true);
             } catch (NullPointerException e) {
             }
         } else if (args.length == 1) {
@@ -66,6 +63,7 @@ public class Main {
                 JOptionPane.showMessageDialog(frame, "database file not specified", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         if (readyToWork) {
             File file = new File(filename);
 
@@ -76,7 +74,6 @@ public class Main {
                     saveDb(file, model);
                 }
             });
-
             View view = new View("UsedCarsDealer", frame);
             Controller controller = new Controller(model, view);
             controller.initController();
@@ -90,7 +87,7 @@ public class Main {
 
     /**
      * A method that loads data from a file into the model.
-     * 
+     *
      * @param file - file containing the cars data - demo database
      */
     private static CarList initDb(File file) {
@@ -123,10 +120,10 @@ public class Main {
         }
         return null;
     }
-    
+
     /**
      * A method that save data from a model into the file.
-     * 
+     *
      * @param file - the file from which data was loaded - demo database
      * @param mode - the data the application was running on
      */

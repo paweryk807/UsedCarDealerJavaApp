@@ -48,10 +48,10 @@ public class View {
         JOptionPane.showMessageDialog(null, "Car with given id already exists", "Info", JOptionPane.INFORMATION_MESSAGE);
         manageMenu.printField.setText("");
     }
-    public void noCarsFoundInfoInManageMenu(){
-        JOptionPane.showMessageDialog(null, "Database is empty", "Info", JOptionPane.INFORMATION_MESSAGE);
-        manageMenu.printField.setText("");
-    }
+    //public void noCarsFoundInfoInManageMenu(){
+    //    JOptionPane.showMessageDialog(null, "Database is empty", "Info", JOptionPane.INFORMATION_MESSAGE);
+    //    manageMenu.printField.setText("");
+    //}
     public void problemWithDataErrorInManageMenu(){
         JOptionPane.showMessageDialog(null, "Problem with data from textFields", "ERROR", JOptionPane.ERROR_MESSAGE);
         manageMenu.printField.setText("");
@@ -60,8 +60,8 @@ public class View {
         JOptionPane.showMessageDialog(null, "Wrong parameters have been entered", "Warning", JOptionPane.WARNING_MESSAGE);
         manageMenu.printField.setText("");
     }
-    public void noResultInManageMenu(){
-        JOptionPane.showMessageDialog(null, "Car with selected id does not exist", "Info", JOptionPane.INFORMATION_MESSAGE);
+    public void noResultInManageMenu(String message){
+        JOptionPane.showMessageDialog(null, message, "Info", JOptionPane.INFORMATION_MESSAGE);
         manageMenu.printField.setText("");
     }
     public String getIdTextFieldDataFromManageMenu(){
@@ -99,8 +99,8 @@ public class View {
         return browseMenu.searchButton;
     }
 
-    public void noResultsInBrowseMenuInfo() {
-        JOptionPane.showMessageDialog(null, "There are no results for this search", "Info", JOptionPane.INFORMATION_MESSAGE);
+    public void noResultsInBrowseMenuInfo(String message) {
+        JOptionPane.showMessageDialog(null, message, "Info", JOptionPane.INFORMATION_MESSAGE);
         browseMenu.printField.setText("");
     }
 
