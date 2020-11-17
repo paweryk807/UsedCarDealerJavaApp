@@ -6,23 +6,46 @@
 package pcarv.usedcardealer.model;
 
 /**
- *
+ * Class representing a car object.
+ * 
  * @author Paweł Rykała
  * @version 1.0
- * Class representing a car object
  */
 public class Car {
-    /** the car identifier
+    /** 
+     * Integer representing the car id.
     */
     private int id;
-
+    
+    /**
+     * String representing the car brand.
+     */
     private String brand;
+    
+    /**
+     * String representing car model.
+     */
     private String model;
-    /** represents the car production year
+    
+    /** 
+     * Integer representing car production year.
      */
     private int year;
+    
+    /**
+     * Float representing car price.
+     */
     private float price;
+    
+    /**
+     * Integer representing car horsepower. 
+     */
     private int horsepower;
+    
+        
+    /**
+     * Integer representing car mileage. 
+     */
     private int mileage;
     
     /**
