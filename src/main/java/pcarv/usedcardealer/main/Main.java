@@ -5,7 +5,10 @@
  */
 package pcarv.usedcardealer.main;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JDialog;
@@ -18,79 +21,136 @@ import pcarv.usedcardealer.view.View;
 import pcarv.usedcardealer.controller.Controller;
 
 /**
- * @author bambe
+ * Prepares the program for action. Validates input parameters. Initializes the
+ * database, controlle and view. Passes database to model.
+ *
+ * @author Paweł Rykała
+ * @version 2.0
  */
 public class Main {
-    private static String filename; 
+
+    private static String filename;
+
     /**
-     @param args filename 
+     * @param args filename
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
+
         filename = "";
+        boolean readyToWork = false;
         JFrame frame = new JFrame();
-        JDialog dialog = new JDialog();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        if(args.length == 0){
-            try{
-                while(!filename.contains(".txt")){
-                    filename = JOptionPane.showInputDialog("Enter the file path");
-                        
+        //JDialog dialog = new JDialog();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.pack();
+        //frame.setVisible(true);
+        if (args.length == 0) {
+            try {
+                filename = JOptionPane.showInputDialog("Enter the file path");
+                if (filename.contains(".txt")) {
+                    JOptionPane.showMessageDialog(frame, "Selected database file: " + filename);
+                    readyToWork = true;
+                } else {
+                    JOptionPane.showMessageDialog(frame, "database file not specified", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(frame, "Choosen file: " + filename);
-                frame.pack();
-                frame.setVisible(true);
-            } catch(Exception e){
-                e.printStackTrace();
+            } catch (NullPointerException e) {
+            }
+        } else if (args.length == 1) {
+            filename = args[0];
+            if (filename.contains(".txt")) {
+                JOptionPane.showMessageDialog(frame, "Selected database file: " + filename);
+                readyToWork = true;
+            } else {
+                JOptionPane.showMessageDialog(frame, "database file not specified", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if(args.length == 1 || !filename.isEmpty()){
-            if(args.length == 1)
-                filename = args[0];
-            
-            System.out.println("Database file : " + filename);
-            CarList model = new CarList();
-            model = getCarsFromDatabase(filename);
-            View view = new View("UsedCarsDealer");
-            Controller controller = new Controller(model,view);
+
+        if (readyToWork) {
+            File file = new File(filename);
+
+            final CarList model = initDb(file);
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    saveDb(file, model);
+                }
+            });
+            View view = new View("UsedCarsDealer", frame);
+            Controller controller = new Controller(model, view);
             controller.initController();
 
+        } else {
+            JOptionPane.showMessageDialog(frame, "Incorrect number of parameters specified", "Error", JOptionPane.ERROR_MESSAGE);
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
-        else{
-            System.out.println("Incorrect number of parameters specified");
-        }
-        
+
     }
+
     /**
-     @param filename - file in .txt format containing the cars like in database
+     * A method that loads data from a file into the model.
+     *
+     * @param file - file containing the cars data - demo database
      */
-    private static CarList getCarsFromDatabase(String filename){
-        try{
+    private static CarList initDb(File file) {
+        try {
             CarList carList = new CarList();
-            File file = new File(filename);
+            //File file = new File(filename);
             Scanner reader = new Scanner(file);
-            reader.useDelimiter("\r\n");
-            while(reader.hasNext()){ 
-               String line = reader.next();
-               if(line.trim().isEmpty()){
-                   continue;
-               }
-               String cells[] = line.split(";");
-               Car tmp = new Car();
-               if (cells.length == 7) {
+            reader.useDelimiter("\n");
+            while (reader.hasNext()) {
+                String line = reader.next();
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                String cells[] = line.split(";");
+                Car tmp = new Car();
+                if (cells.length == 7) {
                     tmp.setId(Integer.parseInt(cells[0]));
                     tmp.setBrand(cells[1]);
-                    tmp.setModel(cells[2]);          
+                    tmp.setModel(cells[2]);
                     tmp.setHorsepower(Integer.parseInt(cells[3]));
                     tmp.setMileage(Integer.parseInt(cells[4]));
                     tmp.setPrice(Float.parseFloat(cells[5]));
                     tmp.setYear(Integer.parseInt(cells[6]));
-               }
-               carList.add(tmp);
+                }
+                carList.add(tmp);
             }
             return carList;
-        } catch (IOException exc){
+        } catch (IOException exc) {
             exc.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * A method that save data from a model into the file.
+     *
+     * @param file - the file from which data was loaded - demo database
+     * @param mode - the data the application was running on
+     */
+    private static void saveDb(File file, CarList model) {
+        FileWriter fw = null;
+        try {
+            String lineToWrite = "";
+            fw = new FileWriter(file);
+            for (Car auto : model.getList()) {
+                lineToWrite = String.valueOf(auto.getId()) + ";"
+                        + auto.getBrand() + ";"
+                        + auto.getModel() + ";"
+                        + String.valueOf(auto.getHorsepower()) + ";"
+                        + String.valueOf(auto.getMileage()) + ";"
+                        + String.valueOf(auto.getPrice()) + ";"
+                        + String.valueOf(auto.getYear()) + "\n";
+                fw.write(lineToWrite);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fw.close();
+                //file.
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

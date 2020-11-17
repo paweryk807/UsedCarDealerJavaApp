@@ -10,8 +10,8 @@ package pcarv.usedcardealer.exception;
  * @author Paweł Rykała
  * @version 1.0
  */
-public class EmptyListException extends Exception {
-    public EmptyListException(String errorMessage){
+public class NoCarException extends Exception {
+    public NoCarException(String errorMessage){
         super(errorMessage);
     }
 }
