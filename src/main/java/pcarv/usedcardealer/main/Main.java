@@ -31,7 +31,7 @@ public class Main {
     private static String filename;
 
     /**
-     * Method which initialize program.
+     * Method which initiates program.
      * @param args optional argument with the path to the file
      */
     public static void main(String[] args) {

@@ -13,6 +13,7 @@ import pcarv.usedcardealer.view.View;
 
 /**
  * Controller class. 
+ * It is responsible for communication between model and view.
  * 
  * @author Paweł Rykała
  * @version 1.5
@@ -20,19 +21,28 @@ import pcarv.usedcardealer.view.View;
 public class Controller {
 
     /**
-     * 
+     * Application view.
      */
     private View view;
     
     /**
+     * List which contains all cars from database.
      */
     private CarList list;
-
+    
+    /**
+     * Initiates controller.
+     * @param list model to set
+     * @param view view to set
+     */
     public Controller(CarList list, View view) {
         this.list = list;
         this.view = view;
     }
 
+    /**
+     * Initiates communication between controller and view.
+     */
     public void initController() {
         view.getBrowseCarsButton().addActionListener(event -> searchForCarsAndUpdateView());
         view.getPrintAllCarsButton().addActionListener(event -> printAllCars());
@@ -43,6 +53,12 @@ public class Controller {
 
     }
 
+    /**
+     * The method responsible for finding a car by the id 
+     * taken from the management tab from view.
+     * After finding the car, it try to update it with data taken from view. 
+     * Updates the view.
+     */
     private void updateCarAndUpdateView() {
         String[] input = view.getTextFieldsDataFromManageMenu();
         try {
@@ -68,7 +84,13 @@ public class Controller {
             view.noResultInManageMenu(e.getMessage());
         }
     }
-
+    
+    /**
+     * The method responsible for finding a car by the id 
+     * taken from the management tab from view.
+     * After finding the car, it delete it. 
+     * Updates the view.
+     */
     private void deleteCarAndUpdateView() {
         String id = view.getIdTextFieldDataFromManageMenu();
         try {
@@ -83,6 +105,7 @@ public class Controller {
     }
 
     /**
+     * @param result value based on which a specific message is displayed in the view
      */
     private void resultOfCarAddition(boolean result) {
         if (result) {

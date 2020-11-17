@@ -14,7 +14,7 @@ import pcarv.usedcardealer.model.Car;
 
 /**
  * A class that represents the view.
- * 
+ * View is responsible for getting input from the user and displaying the results of his actions.
  * @author Paweł Rykała
  * @version 1.5 View uses Swing Framework to display UI to user
  */
