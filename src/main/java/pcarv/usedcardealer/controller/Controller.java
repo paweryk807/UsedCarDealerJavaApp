@@ -83,6 +83,7 @@ public class Controller {
         try {
             Car result = list.getCarById(Integer.parseInt(id));
             list.remove(result);
+            view.carSuccessfullyDeletedInfoInManageMenu();
         } catch (NumberFormatException e) {
             view.badInputWarningInManageMenu();
         } catch (NoCarException e) {

@@ -95,7 +95,7 @@ public class Main {
             CarList carList = new CarList();
             //File file = new File(filename);
             Scanner reader = new Scanner(file);
-            reader.useDelimiter("\n");
+            reader.useDelimiter("\r\n");
             while (reader.hasNext()) {
                 String line = reader.next();
                 if (line.trim().isEmpty()) {
@@ -139,7 +139,7 @@ public class Main {
                         + String.valueOf(auto.getHorsepower()) + ";"
                         + String.valueOf(auto.getMileage()) + ";"
                         + String.valueOf(auto.getPrice()) + ";"
-                        + String.valueOf(auto.getYear()) + "\n";
+                        + String.valueOf(auto.getYear()) + "\r\n";
                 fw.write(lineToWrite);
             }
         } catch (IOException e) {

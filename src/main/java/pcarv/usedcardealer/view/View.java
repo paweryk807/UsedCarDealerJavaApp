@@ -48,10 +48,12 @@ public class View {
         JOptionPane.showMessageDialog(null, "Car with given id already exists", "Info", JOptionPane.INFORMATION_MESSAGE);
         manageMenu.printField.setText("");
     }
-    //public void noCarsFoundInfoInManageMenu(){
-    //    JOptionPane.showMessageDialog(null, "Database is empty", "Info", JOptionPane.INFORMATION_MESSAGE);
-    //    manageMenu.printField.setText("");
-    //}
+    
+    public void carSuccessfullyDeletedInfoInManageMenu(){
+        JOptionPane.showMessageDialog(null, "The car has been successfully deleted", "Info", JOptionPane.INFORMATION_MESSAGE);
+        manageMenu.printField.setText("");
+    }
+    
     public void problemWithDataErrorInManageMenu(){
         JOptionPane.showMessageDialog(null, "Problem with data from textFields", "ERROR", JOptionPane.ERROR_MESSAGE);
         manageMenu.printField.setText("");
