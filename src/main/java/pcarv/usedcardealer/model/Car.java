@@ -58,92 +58,133 @@ public class Car {
     /**
      * @param id id to set 
      */
-    public void setId(int id){
-        this.id = id;
+    public boolean setId(int id){
+        if(id > 0){
+            this.id = id;
+            return true;
+        }
+        return false;
+        
     }
     
     /**
-     * @return car brand
+     * @return String value of private field "brand"
      */
     public String getBrand(){
         return brand;
     }
     
     /**
+     * Sets the value of the private field "brand" if the given parameter is not empty.
      * @param brand brand to set
+     * @return true if the given parameter is not empty and the value of a private field is changed.
      */
-    public void setBrand(String brand){
-        this.brand = brand;
+    public boolean setBrand(String brand){
+        if(!brand.isEmpty()){
+           this.brand = brand;
+           return true;
+        }
+        else return false;
     }
     
     /**
-     * @return car model
+     * @return String value of private field "model"
      */
     public String getModel(){
         return model;
     }
     
     /**
+     * Sets the value of the private field "model" if the given parameter is not empty.
      * @param model model to set
+     * @return true if the given parameter is not empty and the value of a private field is changed.
      */
-    public void setModel(String model){
-        this.model = model;
+    public boolean setModel(String model){
+        if(!model.isEmpty()){
+            this.model = model;
+            return true;
+        }
+        return false;
     }
     
     /**
-     * @return year of production
+     * @return integer value of private field "year"
      */
     public int getYear(){
         return year;
     }
     
     /**
+     * Sets the value of the private field "year" if the given parameter is in range (1900 - 2020).
      * @param year year of car production to set
+     * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
-    public void setYear(int year){
-        this.year = year;
+    public boolean setYear(int year){
+        if(year >= 1900 && year <= 2020){
+            this.year = year;
+            return true;
+        }
+        return false;
     }
     
     /**
-     * @return current car price
+     * @return float value of private field "price"
      */
     public float getPrice(){
         return price;
     }
     
     /**
+     * Sets the value of the private field "price" if the given parameter is in range (1 - 9999999).
      * @param price car price to set
+     * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
-    public void setPrice(float price){
-        this.price = price;
+    public boolean setPrice(float price){
+        if(price > 0 && price < 10000000){
+            this.price = price;
+            return true;
+        }
+        return false;
     }
     
     /**
-     * @return horsepower
+     * @return integer value of private field "horsepower"
      */
     public int getHorsepower(){
         return horsepower;
     }
     
     /**
+     * Sets the value of the private field "horsepower" if the given parameter is in range (1 - 9999).
      * @param horsepower horsepower to set
+     * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
-    public void setHorsepower(int horsepower){
-        this.horsepower = horsepower;
+    public boolean setHorsepower(int horsepower){
+        if(horsepower > 0 && horsepower < 10000){
+            this.horsepower = horsepower;
+            return true;
+        }
+        return false;
     }
     
     /**
-     * @return current car mileage
+     * @return integer value of private field "mileage"
      */
     public int getMileage(){
         return mileage;
     }
     
     /**
+     * Sets the value of the private field "mileage" if the given parameter is in range (1 - 9999999).
      * @param mileage mileage to set
+     * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
-    public void setMileage(int mileage){
-        this.mileage = mileage;
+    public boolean setMileage(int mileage){
+        if(mileage > 0 && mileage < 10000000){
+            this.mileage = mileage;
+            return true;
+        }
+        return false;
     }
     
 }

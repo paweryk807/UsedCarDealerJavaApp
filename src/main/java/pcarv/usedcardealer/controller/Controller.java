@@ -12,13 +12,20 @@ import pcarv.usedcardealer.model.CarList;
 import pcarv.usedcardealer.view.View;
 
 /**
- *
+ * Controller class. 
+ * 
  * @author Paweł Rykała
  * @version 1.5
  */
 public class Controller {
 
+    /**
+     * 
+     */
     private View view;
+    
+    /**
+     */
     private CarList list;
 
     public Controller(CarList list, View view) {
@@ -26,20 +33,17 @@ public class Controller {
         this.view = view;
     }
 
-    public void initView() {
-        //view.getFirstnameTextfield().setText(car.getBrand());
-        //view.getLastnameTextfield().setText(car.getModel());
-    }
-
     public void initController() {
-        view.getBrowseCarsButton().addActionListener(event -> searchForCars());
-        view.getSelectCarButton().addActionListener(event -> getSelectedCar());
-        view.getUpdateCarButton().addActionListener(event -> updateCar());
-        view.getDeleteCarButton().addActionListener(event -> deleteCar());
-        view.getAddCarButton().addActionListener(event -> addCar());
+        view.getBrowseCarsButton().addActionListener(event -> searchForCarsAndUpdateView());
+        view.getPrintAllCarsButton().addActionListener(event -> printAllCars());
+        view.getSelectCarButton().addActionListener(event -> getSelectedCarAndUpdateView());
+        view.getUpdateCarButton().addActionListener(event -> updateCarAndUpdateView());
+        view.getDeleteCarButton().addActionListener(event -> deleteCarAndUpdateView());
+        view.getAddCarButton().addActionListener(event -> addCarAndUpdateView());
+
     }
 
-    private void updateCar() {
+    private void updateCarAndUpdateView() {
         String[] input = view.getTextFieldsDataFromManageMenu();
         try {
             if (input.length == 7) {
@@ -48,25 +52,12 @@ public class Controller {
                 int newYear = Integer.parseInt(input[2]); //input[3] brand//input[4] model
                 int newHp = Integer.parseInt(input[5]);
                 int newMileage = Integer.parseInt(input[6]);
-
-                if (!input[3].isEmpty()) {
-                    result.setBrand(input[3]);
-                }
-                if (!input[4].isEmpty()) {
-                    result.setModel(input[4]);
-                }
-                if (newPrice > 0) {
-                    result.setPrice(newPrice);
-                }
-                if (newYear >= 1900 && newYear <= 2020) {
-                    result.setYear(newYear);
-                }
-                if (newHp > 0) {
-                    result.setHorsepower(newHp);
-                }
-                if (newMileage > 0) {
-                    result.setMileage(newMileage);
-                }
+                result.setBrand(input[3]);
+                result.setModel(input[4]);
+                result.setPrice(newPrice);
+                result.setYear(newYear);
+                result.setHorsepower(newHp);
+                result.setMileage(newMileage);
                 view.printCarInManageMenu(list.getCarById(Integer.parseInt(input[0])));
             } else {
                 view.problemWithDataErrorInManageMenu();
@@ -78,7 +69,7 @@ public class Controller {
         }
     }
 
-    private void deleteCar() {
+    private void deleteCarAndUpdateView() {
         String id = view.getIdTextFieldDataFromManageMenu();
         try {
             Car result = list.getCarById(Integer.parseInt(id));
@@ -91,7 +82,24 @@ public class Controller {
         }
     }
 
-    private void addCar() {
+    /**
+     */
+    private void resultOfCarAddition(boolean result) {
+        if (result) {
+            view.carSuccessfullyAddedInfoInManageMenu();
+        } else {
+            view.carNotAddedInfoInManageMenu();
+        }
+    }
+
+    /**
+     * The method responsible for adding car with parameters setted by data
+     * taken from the management tab from view.
+     * After adding the car, it tells view to display it. 
+     * If there is an addition problem it tells view to display message.
+     * Updates the view.
+     */
+    private void addCarAndUpdateView() {
         String[] input = view.getTextFieldsDataFromManageMenu();
         try {
             if (input.length == 7 && Integer.parseInt(input[0]) > 0) {
@@ -101,44 +109,27 @@ public class Controller {
                     int newYear = Integer.parseInt(input[2]); //input[3] brand//input[4] model
                     int newHp = Integer.parseInt(input[5]);
                     int newMileage = Integer.parseInt(input[6]);
-                    boolean ok = true;
-                    result.setId(Integer.parseInt(input[0]));
-                    if (!input[3].isEmpty() && ok) {
-                        result.setBrand(input[3]);
-                    } else {
-                        ok = false;
-                    }
-                    if (!input[4].isEmpty() && ok) {
-                        result.setModel(input[4]);
-                    } else {
-                        ok = false;
-                    }
-                    if (newPrice > 0.0 && newPrice < 10000000.0 && ok) {
-                        result.setPrice(newPrice);
-                    } else {
-                        ok = false;
-                    }
-                    if (newYear >= 1900 && newYear <= 2020 && ok) {
-                        result.setYear(newYear);
-                    } else {
-                        ok = false;
-                    }
-                    if (newHp > 0 && newHp < 10000 && ok) {
-                        result.setHorsepower(newHp);
-                    } else {
-                        ok = false;
-                    }
-                    if (newMileage > 0 && newMileage < 10000000 && ok) {
-                        result.setMileage(newMileage);
-                    } else {
-                        ok = false;
+                    boolean ok = false;
+                    if (result.setId(Integer.parseInt(input[0]))) {
+                        if (result.setBrand(input[3])) {
+                            if (result.setModel(input[4])) {
+                                if (result.setPrice(newPrice)) {
+                                    if (result.setYear(newYear)) {
+                                        if (result.setHorsepower(newHp)) {
+                                            if (result.setMileage(newMileage)) {
+                                                ok = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (ok) {
                         list.add(result);
                         view.printCarInManageMenu(list.getCarById(Integer.parseInt(input[0])));
-                    } else {
-                        view.badInputWarningInManageMenu();
                     }
+                    resultOfCarAddition(ok);
                 } else {
                     view.addCarWithExistingIdInfoInManageMenu();
                 }
@@ -152,7 +143,13 @@ public class Controller {
         }
     }
 
-    private void getSelectedCar() {
+    /**
+     * The method responsible for finding a car by the id 
+     * taken from the management tab from view.
+     * After finding the car, it tells view to display it. 
+     * Updates the view.
+     */
+    private void getSelectedCarAndUpdateView() {
         String id = view.getIdTextFieldDataFromManageMenu();
         try {
             if (list.idExist(Integer.parseInt(id))) {
@@ -168,6 +165,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Tries to convert the given text to an float value.
+     * On an NumberFormatException, it handles it and returns 0.0f.
+     * @param text value to convert
+     * @return float value from given String or 0.0f when exception occurs.
+     */
     private float getFloatValue(String text) {
         try {
             float tester = Float.parseFloat(text);
@@ -176,7 +179,13 @@ public class Controller {
             return 0.0f;
         }
     }
-
+    
+    /**
+     * Tries to convert the given text to an integer value.
+     * On an NumberFormatException, it handles it and returns 0.
+     * @param text value to convert
+     * @return int value from given String or 0 when exception occurs.
+     */
     private int getIntValue(String text) {
         try {
             int tester = Integer.parseInt(text);
@@ -186,112 +195,86 @@ public class Controller {
         }
     }
 
-    private void searchForCars() {
-        view.clearTextArea();
+    /**
+     * Prints all cars parameters in browse tab in the view.
+     */
+    private void printAllCars() {
+        view.clearPrintFieldInBrowseMenu();
+        for (Car elem : list.getList()) {
+            view.printCarInBrowseMenu(elem);
+        }
+    }
+    
+    /**
+     * Method responsible for searching cars in the model
+     * based on the data collected from the form in the browse tab.
+     * After searching updates the view.
+     */
+    private void searchForCarsAndUpdateView() {
+        //Get Form
+        String input[] = view.getTextFieldsDataFromBrowseMenu();
         try {
-            CarList tmp = (CarList) list.clone();
-            List<Car> result = list.getList();
-            //Get Form
-            float lowerPriceLimit = getFloatValue(view.getLowerPriceLimitTextField().getText());
-            float upperPriceLimit = getFloatValue(view.getUpperPriceLimitTextField().getText());
-            int lowerYearLimit = getIntValue(view.getLowerYearLimitTextField().getText());
-            int upperYearLimit = getIntValue(view.getUpperYearLimitTextField().getText());
-            String brand = view.getBrandTextField().getText();
-            String model = view.getModelTextField().getText();
-            int lowerHorsepowerLimit = getIntValue(view.getLowerHorsepowerLimitTextField().getText());
-            int upperHorsepowerLimit = getIntValue(view.getUpperHorsepowerLimitTextField().getText());
-            int mileageLimit = getIntValue(view.getMileageLimitTextField().getText());
+            if (input.length == 9) {
+                CarList tmp = (CarList) list.clone();
+                List<Car> result = list.getList();
+                float lowerPriceLimit = getFloatValue(input[0]);
+                float upperPriceLimit = getFloatValue(input[1]);
+                int lowerYearLimit = getIntValue(input[2]);
+                int upperYearLimit = getIntValue(input[3]);
+                String brand = input[4];
+                String model = input[5];
+                int lowerHorsepowerLimit = getIntValue(input[6]);
+                int upperHorsepowerLimit = getIntValue(input[7]);
+                int mileageLimit = getIntValue(input[8]);
 
-            boolean lowNot0 = (lowerPriceLimit != 0.0f);
-            boolean hiNot0 = (upperPriceLimit != 0.0f);
-            if (lowNot0 || hiNot0) {
-                if (lowNot0) {
-                    if (hiNot0) {
-                        if (upperPriceLimit >= lowerPriceLimit) {
-                            result = tmp.searchCarsByPrice(lowerPriceLimit, upperPriceLimit);
-                        } else {
-                            result = tmp.searchCarsByPrice(upperPriceLimit, lowerPriceLimit);
-                        }
+                if (lowerPriceLimit != 0.0f || upperPriceLimit != 0.0f) {
+                    if (upperPriceLimit >= lowerPriceLimit) {
+                        result = tmp.searchCarsByPrice(lowerPriceLimit, upperPriceLimit);
                     } else {
-                        result = tmp.searchCarsByPrice(lowerPriceLimit, Float.MAX_VALUE);
+                        result = tmp.searchCarsByPrice(upperPriceLimit, lowerPriceLimit);
                     }
-                } else if (hiNot0) {
-                    result = tmp.searchCarsByPrice(0.0f, upperYearLimit);
+                    tmp.setList(result);
                 }
-                tmp.setList(result);
-            }
-            lowNot0 = (lowerYearLimit != 0);
-            hiNot0 = (upperYearLimit != 0);
-            if (lowNot0 || hiNot0) {
-                if (lowNot0) {
-                    if (hiNot0) {
-                        if (upperYearLimit >= lowerYearLimit) {
-                            result = tmp.searchCarsByYear(lowerYearLimit, upperYearLimit);
-                        } else {
-                            result = tmp.searchCarsByYear(upperYearLimit, lowerYearLimit);
-                        }
+                if (lowerYearLimit != 0 || upperYearLimit != 0) {
+                    if (upperYearLimit >= lowerYearLimit) {
+                        result = tmp.searchCarsByYear(lowerYearLimit, upperYearLimit);
                     } else {
-                        result = tmp.searchCarsByYear(lowerYearLimit, 2020);
+                        result = tmp.searchCarsByYear(upperYearLimit, lowerYearLimit);
                     }
-                } else if (hiNot0) {
-                    result = tmp.searchCarsByYear(1900, upperYearLimit);
+                    tmp.setList(result);
                 }
-                tmp.setList(result);
-            }
-            if (!brand.isEmpty()) {
-                result = tmp.searchCarsByBrand(brand);
-                tmp.setList(result);
-            }
-            if (!model.isEmpty()) {
-                result = tmp.searchCarsByModel(model);
-                tmp.setList(result);
-            }
-            lowNot0 = (lowerHorsepowerLimit != 0);
-            hiNot0 = (upperHorsepowerLimit != 0);
-            if (lowNot0 || hiNot0) {
-                if (lowNot0) {
-                    if (hiNot0) {
-                        if (upperHorsepowerLimit >= lowerHorsepowerLimit) {
-                            result = tmp.searchCarsByPower(lowerHorsepowerLimit, upperHorsepowerLimit);
-                        } else {
-                            result = tmp.searchCarsByPower(upperHorsepowerLimit, lowerHorsepowerLimit);
-                        }
+                if (!brand.isEmpty()) {
+                    result = tmp.searchCarsByBrand(brand);
+                    tmp.setList(result);
+                }
+                if (!model.isEmpty()) {
+                    result = tmp.searchCarsByModel(model);
+                    tmp.setList(result);
+                }
+                if (lowerHorsepowerLimit != 0 || upperHorsepowerLimit != 0) {
+                    if (upperHorsepowerLimit >= lowerHorsepowerLimit) {
+                        result = tmp.searchCarsByPower(lowerHorsepowerLimit, upperHorsepowerLimit);
                     } else {
-                        result = tmp.searchCarsByPower(lowerHorsepowerLimit, Integer.MAX_VALUE);
+                        result = tmp.searchCarsByPower(upperHorsepowerLimit, lowerHorsepowerLimit);
                     }
-                } else if (hiNot0) {
-                    result = tmp.searchCarsByYear(0, upperHorsepowerLimit);
+                    tmp.setList(result);
                 }
-                tmp.setList(result);
+                if (mileageLimit != 0) {
+                    result = tmp.searchCarsByMileage(mileageLimit);
+                    tmp.setList(result);
+                }
+                
+                //Update View
+                view.clearPrintFieldInBrowseMenu();
+                for (Car elem : result) {
+                    view.printCarInBrowseMenu(elem);
+                }
             }
-            if (mileageLimit != 0) {
-                result = tmp.searchCarsByMileage(mileageLimit);
-                tmp.setList(result);
-            }
-            for (Car elem : result) {
-                view.printCarInBrowseMenu(elem);
-            }
+            else view.somethingWentWrongInBrowseMenu();
         } catch (CloneNotSupportedException e) {
             view.somethingWentWrongInBrowseMenu();
         } catch (NoCarException e) {
             view.noResultsInBrowseMenuInfo(e.getMessage());
         }
     }
-    /*
-    private void carAdded(Car car) {
-        JOptionPane.showMessageDialog(null, "Car saved : " + car.getBrand() + " " + car.getModel(), "Info", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    private void carDeleted(String brand, String model) {
-        JOptionPane.showMessageDialog(null, "Car deleted : " + brand + " " + model, "Info", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void carNotFound() {
-        JOptionPane.showMessageDialog(null, "Lastname saved : " + car.getModel(), "Info", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void sayHello() {
-        JOptionPane.showMessageDialog(null, "Hello " + car.getBrand() + " " + car.getModel(), "Info", JOptionPane.INFORMATION_MESSAGE);
-    }*/
-
 }

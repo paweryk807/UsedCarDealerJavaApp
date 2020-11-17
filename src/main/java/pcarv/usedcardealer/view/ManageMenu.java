@@ -17,34 +17,123 @@ import javax.swing.SpringLayout;
 import pcarv.usedcardealer.model.Car;
 
 /**
- *
+ * A class that represents the management tab in the menu.
+ * Extends JPanel.
+ * 
  * @author Paweł Rykała
- * @version 1.0
+ * @version 1.5 ManageMenu uses Swing Framework to display UI to user
  */
 class ManageMenu extends JPanel {
 
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car id.
+     */
     private final JLabel idLabel;
+    
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car price.
+     */
     private final JLabel priceLabel;
+    
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car year of production.
+     */
     private final JLabel yearLabel;
+    
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car brand.
+     */
     private final JLabel brandLabel;
+    
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car model.
+     */
     private final JLabel modelLabel;
+    
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car horsepower.
+     */
     private final JLabel horsepowerLabel;
+    
+    /**
+     * A label used to show the user which text field 
+     * is responsible for entering car mileage.
+     */
     private final JLabel mileageLabel;
 
-    JTextField idTextField;
-    JTextField priceTextField;
-    JTextField yearTextField;
-    JTextField brandTextField;
-    JTextField modelTextField;
-    JTextField horsepowerTextField;
-    JTextField mileageTextField;
+    /**
+     * Text field responsible for entering a value of car id.
+     */
+    private final JTextField idTextField;
+    
+    /**
+     * Text field responsible for entering a value of car price.
+     */
+    private final JTextField priceTextField;
+    
+    /**
+     * Text field responsible for entering a value of car year of production.
+     */
+    private final JTextField yearTextField;
+    
+    /**
+     * Text field responsible for entering a car brand.
+     */
+    private final JTextField brandTextField;
+    
+    /**
+     * Text field responsible for entering a car model.
+     */
+    private final JTextField modelTextField;
+    
+    /**
+     * Text field responsible for entering a value of car horsepower.
+     */
+    private final JTextField horsepowerTextField;
+    
+    /**
+     * Text field responsible for entering a value of car mileage.
+     */
+    private final JTextField mileageTextField;
 
-    JButton selectButton;
-    JButton addButton;
-    JButton deleteButton;
-    JButton updateButton;
-    JTextArea printField;
+    /**
+     * Button responsible for getting data of selected by id car.
+     */
+    public final JButton selectButton;
+    
+    /**
+     * Button responsible for adding a car based 
+     * on the data entered by the user into database.
+     */
+    public final JButton addButton;
+    
+    /**
+     * Button responsible for removing a car selected by id 
+     * entered by the user from database.
+     */
+    public final JButton deleteButton;
+    
+    /**
+     * Button responsible for updating a car selected by id 
+     * entered by the user from database.
+     */
+    public final JButton updateButton;
+    
+    /**
+     * Text area used for printing values sended from controller.
+     */
+    private final JTextArea printField;
 
+    /**
+     * Initializes an object, assigns text to labels.
+     * Calls the method {@link #createFormWithTextArea() }
+     */
     ManageMenu() {
         super();
         super.setLayout(new GridLayout(0, 2));
@@ -76,7 +165,11 @@ class ManageMenu extends JPanel {
         this.createFormWithTextArea();
 
     }
-
+    
+    /**
+     * Sets the placement of buttons, labels, text area, and text boxes. 
+     * After executing the method, tab contains the form and text area.
+     */
     private void createFormWithTextArea() {
         JLabel[] labels = {
             idLabel, priceLabel,
@@ -130,11 +223,26 @@ class ManageMenu extends JPanel {
         scroll.getViewport().setView(printField);
         this.add(scroll);
     }
-
+    
+    /**
+     * Clears the text area.
+     */
+    public void clearPrintField(){
+        this.printField.setText("");
+    }
+    
+    /**
+     * Method returns the String entered in the text field from private field "idTextField" by the user.
+     * @return String entered into the text field from private field "idTextField" by the user.
+     */
     String getIdTextFieldData() {
         return idTextField.getText();
     }
-
+    
+    /**
+     * The method returns a String array of the entered contents of all text fields.
+     * @return String array of the entered contents of all text fields
+     */
     String[] getTextFieldsData() {
         String[] textEntered = {
             idTextField.getText(), priceTextField.getText(),
@@ -144,7 +252,11 @@ class ManageMenu extends JPanel {
         };
         return textEntered;
     }
-
+    
+    /**
+     * Prints the parameters with short description of {@link pcarv.usedcardealer.model.Car} object
+     * given as a parameter through the private field "printField" element.
+     */
     void printCar(Car car) {
         this.printField.setText("");
         this.printField.append("ID: " + String.valueOf(car.getId()) + "\n");
@@ -155,7 +267,11 @@ class ManageMenu extends JPanel {
         this.printField.append("Horsepower: " + String.valueOf(car.getHorsepower()) + "\n");
         this.printField.append("Mileage: " + String.valueOf(car.getMileage()) + "\n\n");
     }
-
+    
+    /**
+     * Sets text fields to values from the {@link pcarv.usedcardealer.model.Car} object
+     * given as a parameter.
+     */
     void setTextFields(Car car) {
         idTextField.setText(String.valueOf(car.getId()));
         brandTextField.setText(car.getBrand());

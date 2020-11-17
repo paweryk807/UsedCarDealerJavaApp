@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,17 +31,15 @@ public class Main {
     private static String filename;
 
     /**
-     * @param args filename
+     * Method which initialize program.
+     * @param args optional argument with the path to the file
      */
     public static void main(String[] args) {
 
         filename = "";
         boolean readyToWork = false;
         JFrame frame = new JFrame();
-        //JDialog dialog = new JDialog();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.pack();
-        //frame.setVisible(true);
         if (args.length == 0) {
             try {
                 filename = JOptionPane.showInputDialog("Enter the file path");
@@ -93,7 +90,6 @@ public class Main {
     private static CarList initDb(File file) {
         try {
             CarList carList = new CarList();
-            //File file = new File(filename);
             Scanner reader = new Scanner(file);
             reader.useDelimiter("\r\n");
             while (reader.hasNext()) {

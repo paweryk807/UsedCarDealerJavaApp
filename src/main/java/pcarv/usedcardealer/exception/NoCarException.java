@@ -6,11 +6,19 @@
 package pcarv.usedcardealer.exception;
 
 /**
- *
+ * The class representing the exception 
+ * used to handle unsafe behavior in the model.
+ * 
  * @author Paweł Rykała
  * @version 1.0
  */
 public class NoCarException extends Exception {
+   
+    
+    /**
+     * Initialize object.
+     * @param errorMessage message to set.
+     */
     public NoCarException(String errorMessage){
         super(errorMessage);
     }
