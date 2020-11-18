@@ -15,8 +15,9 @@ import pcarv.usedcardealer.model.Car;
 /**
  * A class that represents the view.
  * View is responsible for getting input from the user and displaying the results of his actions.
+ * View uses Swing Framework to display UI to user.
  * @author Paweł Rykała
- * @version 1.5 View uses Swing Framework to display UI to user
+ * @version 1.5 
  */
 public class View {
 
@@ -36,6 +37,8 @@ public class View {
     
     /**
      * Initializes an object, create and assigns tabs.
+     * @param title title to set.
+     * @param frame frame to set.
      */
     public View(String title,JFrame frame) {
 
@@ -145,6 +148,7 @@ public class View {
     }
 
     /**
+     * Returns a button responsible for car search operation.
      * @return JButton select button from management tab.
      */
     public JButton getSelectCarButton() {
@@ -152,6 +156,7 @@ public class View {
     }
 
     /**
+     * Returns a button responsible for car update operation.
      * @return JButton update button from management tab.
      */
     public JButton getUpdateCarButton() {
@@ -159,6 +164,7 @@ public class View {
     }
 
     /**
+     * Returns a button responsible for car delete operation.
      * @return JButton delete button from management tab.
      */
     public JButton getDeleteCarButton() {
@@ -166,6 +172,7 @@ public class View {
     }
 
     /**
+     * Returns a button responsible for adding a car to database operation.
      * @return JButton add button from management tab.
      */
     public JButton getAddCarButton() {
@@ -183,6 +190,7 @@ public class View {
 
     // Browse Menu 
     /**
+     * Returns a button responsible for browse cars in database.
      * @return JButton browse button from browse tab.
      */
     public JButton getBrowseCarsButton() {
@@ -190,6 +198,7 @@ public class View {
     }
     
     /**
+     * Returns a button responsible for printing all cars from database.
      * @return JButton print button from browse tab.
      */
     public JButton getPrintAllCarsButton(){
@@ -238,6 +247,7 @@ public class View {
     }
 
     /**
+     * Returns an object form private field "frame".
      * @return JFrame from private field "frame".
      */
     public JFrame getFrame() {

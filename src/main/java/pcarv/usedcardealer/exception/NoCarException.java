@@ -16,7 +16,7 @@ public class NoCarException extends Exception {
    
     
     /**
-     * Initiates object.
+     * Initiates an object.
      * @param errorMessage message to set.
      */
     public NoCarException(String errorMessage){

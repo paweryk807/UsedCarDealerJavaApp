@@ -21,7 +21,7 @@ import pcarv.usedcardealer.controller.Controller;
 
 /**
  * Prepares the program for action. Validates input parameters. Initializes the
- * database, controlle and view. Passes database to model.
+ * database, controller and view. Passes database to model.
  *
  * @author Paweł Rykała
  * @version 2.0
@@ -32,7 +32,7 @@ public class Main {
 
     /**
      * Method which initiates program.
-     * @param args optional argument with the path to the file
+     * @param args optional argument with the path to the file.
      */
     public static void main(String[] args) {
 
@@ -65,6 +65,7 @@ public class Main {
             File file = new File(filename);
 
             final CarList model = initDb(file);
+            if(model!=null){
             frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -74,7 +75,11 @@ public class Main {
             View view = new View("UsedCarsDealer", frame);
             Controller controller = new Controller(model, view);
             controller.initController();
-
+            }
+            else{
+                JOptionPane.showMessageDialog(frame, "Incorrect parameters specified", "Error", JOptionPane.ERROR_MESSAGE);
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            }
         } else {
             JOptionPane.showMessageDialog(frame, "Incorrect number of parameters specified", "Error", JOptionPane.ERROR_MESSAGE);
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
@@ -112,7 +117,6 @@ public class Main {
             }
             return carList;
         } catch (IOException exc) {
-            exc.printStackTrace();
         }
         return null;
     }
@@ -143,7 +147,6 @@ public class Main {
         } finally {
             try {
                 fw.close();
-                //file.
             } catch (IOException e) {
                 e.printStackTrace();
             }

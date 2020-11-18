@@ -22,11 +22,12 @@ import pcarv.usedcardealer.model.Car;
 /**
  * A class that represents the browse tab in the menu.
  * Extends JPanel.
+ * BrowseMenu uses Swing framework to display UI to user.
  * 
  * @author Paweł Rykała
- * @version 1.2 BrowseMenu uses Swing framework to display UI to user
+ * @version 1.2 
  */
-class BrowseMenu extends JPanel {
+public class BrowseMenu extends JPanel {
 
     /**
      * A label used to show the user which text field 
@@ -147,7 +148,7 @@ class BrowseMenu extends JPanel {
      * Sets masks to formatted text fields.
      * Calls the method {@link #createFormWithTextArea() }
      */
-    BrowseMenu() {
+    public BrowseMenu() {
         super();
         super.setLayout(new GridLayout(0, 2));
         MaskFormatter priceMask = null;
@@ -240,8 +241,9 @@ class BrowseMenu extends JPanel {
     /**
      * Prints the parameters with short description of {@link pcarv.usedcardealer.model.Car} object
      * given as a parameter through the private field "printField" element.
+     * @param car car whose parameters must be set in the text area in the menu.
      */
-    void printCar(Car car) {
+    public void printCar(Car car) {
         this.printField.append("ID: " + String.valueOf(car.getId()) + "\n");
         this.printField.append("Brand: " + car.getBrand() + "\n");
         this.printField.append("Model: " + car.getModel() + "\n");

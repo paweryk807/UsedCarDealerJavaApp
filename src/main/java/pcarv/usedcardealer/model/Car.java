@@ -9,7 +9,7 @@ package pcarv.usedcardealer.model;
  * Class representing a car object.
  * 
  * @author Paweł Rykała
- * @version 1.0
+ * @version 1.2
  */
 public class Car {
     /** 
@@ -49,6 +49,7 @@ public class Car {
     private int mileage;
     
     /**
+     * Returns int value from private field "id".
      * @return current car identifier
      */
     public int getId(){
@@ -56,7 +57,11 @@ public class Car {
     }
     
     /**
-     * @param id id to set 
+     * Validates given as a parameter value and sets private field 
+     * "id" value if given parameter is positive value.
+     * @param id id to set.
+     * @return true if the given parameter is a positive number and can be set.
+     * 
      */
     public boolean setId(int id){
         if(id > 0){
@@ -68,7 +73,8 @@ public class Car {
     }
     
     /**
-     * @return String value of private field "brand"
+     * Returns String value of private field "brand".
+     * @return String value of private field "brand".
      */
     public String getBrand(){
         return brand;
@@ -76,7 +82,7 @@ public class Car {
     
     /**
      * Sets the value of the private field "brand" if the given parameter is not empty.
-     * @param brand brand to set
+     * @param brand brand to set.
      * @return true if the given parameter is not empty and the value of a private field is changed.
      */
     public boolean setBrand(String brand){
@@ -88,7 +94,8 @@ public class Car {
     }
     
     /**
-     * @return String value of private field "model"
+     * Returns String value of private field "model".
+     * @return String value of private field "model".
      */
     public String getModel(){
         return model;
@@ -96,7 +103,7 @@ public class Car {
     
     /**
      * Sets the value of the private field "model" if the given parameter is not empty.
-     * @param model model to set
+     * @param model model to set.
      * @return true if the given parameter is not empty and the value of a private field is changed.
      */
     public boolean setModel(String model){
@@ -108,7 +115,8 @@ public class Car {
     }
     
     /**
-     * @return integer value of private field "year"
+     * Returns integer value of private field "year".
+     * @return integer value of private field "year".
      */
     public int getYear(){
         return year;
@@ -116,7 +124,7 @@ public class Car {
     
     /**
      * Sets the value of the private field "year" if the given parameter is in range (1900 - 2020).
-     * @param year year of car production to set
+     * @param year year of car production to set.
      * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
     public boolean setYear(int year){
@@ -128,7 +136,8 @@ public class Car {
     }
     
     /**
-     * @return float value of private field "price"
+     * Returns float value of private field "price".
+     * @return float value of private field "price".
      */
     public float getPrice(){
         return price;
@@ -136,7 +145,7 @@ public class Car {
     
     /**
      * Sets the value of the private field "price" if the given parameter is in range (1 - 9999999).
-     * @param price car price to set
+     * @param price car price to set.
      * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
     public boolean setPrice(float price){
@@ -148,7 +157,8 @@ public class Car {
     }
     
     /**
-     * @return integer value of private field "horsepower"
+     * Returns integer value of private field "horsepower".
+     * @return integer value of private field "horsepower".
      */
     public int getHorsepower(){
         return horsepower;
@@ -156,7 +166,7 @@ public class Car {
     
     /**
      * Sets the value of the private field "horsepower" if the given parameter is in range (1 - 9999).
-     * @param horsepower horsepower to set
+     * @param horsepower horsepower to set.
      * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
     public boolean setHorsepower(int horsepower){
@@ -168,7 +178,8 @@ public class Car {
     }
     
     /**
-     * @return integer value of private field "mileage"
+     * Returns integer value of private field "mileage".
+     * @return integer value of private field "mileage".
      */
     public int getMileage(){
         return mileage;
@@ -176,7 +187,7 @@ public class Car {
     
     /**
      * Sets the value of the private field "mileage" if the given parameter is in range (1 - 9999999).
-     * @param mileage mileage to set
+     * @param mileage mileage to set.
      * @return true if the given parameter is in acceptable range and the value of a private field is changed.
      */
     public boolean setMileage(int mileage){

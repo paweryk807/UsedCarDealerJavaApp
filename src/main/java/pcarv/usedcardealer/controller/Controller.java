@@ -31,7 +31,7 @@ public class Controller {
     private CarList list;
     
     /**
-     * Initiates controller.
+     * Initializes the controller.
      * @param list model to set
      * @param view view to set
      */
@@ -105,6 +105,7 @@ public class Controller {
     }
 
     /**
+     * Updates the view depending on the result of adding a car to the database.
      * @param result value based on which a specific message is displayed in the view
      */
     private void resultOfCarAddition(boolean result) {

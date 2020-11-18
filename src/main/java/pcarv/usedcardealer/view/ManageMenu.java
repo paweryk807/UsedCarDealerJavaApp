@@ -19,11 +19,11 @@ import pcarv.usedcardealer.model.Car;
 /**
  * A class that represents the management tab in the menu.
  * Extends JPanel.
- * 
+ * ManageMenu uses Swing Framework to display UI to user.
  * @author Paweł Rykała
- * @version 1.5 ManageMenu uses Swing Framework to display UI to user
+ * @version 1.5 
  */
-class ManageMenu extends JPanel {
+public class ManageMenu extends JPanel {
 
     /**
      * A label used to show the user which text field 
@@ -134,7 +134,7 @@ class ManageMenu extends JPanel {
      * Initializes an object, assigns text to labels.
      * Calls the method {@link #createFormWithTextArea() }
      */
-    ManageMenu() {
+    public ManageMenu() {
         super();
         super.setLayout(new GridLayout(0, 2));
         idLabel = new JLabel("Car ID: ");
@@ -235,7 +235,7 @@ class ManageMenu extends JPanel {
      * Method returns the String entered in the text field from private field "idTextField" by the user.
      * @return String entered into the text field from private field "idTextField" by the user.
      */
-    String getIdTextFieldData() {
+    public String getIdTextFieldData() {
         return idTextField.getText();
     }
     
@@ -243,7 +243,7 @@ class ManageMenu extends JPanel {
      * The method returns a String array of the entered contents of all text fields.
      * @return String array of the entered contents of all text fields
      */
-    String[] getTextFieldsData() {
+    public String[] getTextFieldsData() {
         String[] textEntered = {
             idTextField.getText(), priceTextField.getText(),
             yearTextField.getText(), brandTextField.getText(),
@@ -256,8 +256,9 @@ class ManageMenu extends JPanel {
     /**
      * Prints the parameters with short description of {@link pcarv.usedcardealer.model.Car} object
      * given as a parameter through the private field "printField" element.
+     * @param car car whose parameters must be set in the text area in the menu.
      */
-    void printCar(Car car) {
+    public void printCar(Car car) {
         this.printField.setText("");
         this.printField.append("ID: " + String.valueOf(car.getId()) + "\n");
         this.printField.append("Brand: " + car.getBrand() + "\n");
@@ -271,8 +272,9 @@ class ManageMenu extends JPanel {
     /**
      * Sets text fields to values from the {@link pcarv.usedcardealer.model.Car} object
      * given as a parameter.
+     * @param car car whose parameters must be set in the text fields in the menu.
      */
-    void setTextFields(Car car) {
+    public void setTextFields(Car car) {
         idTextField.setText(String.valueOf(car.getId()));
         brandTextField.setText(car.getBrand());
         modelTextField.setText(String.valueOf(car.getModel()));

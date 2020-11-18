@@ -32,6 +32,7 @@ public class CarList implements Cloneable {
 
     /**
      * Sets the class field "carList" to the specified list
+     * @param list list with {@link pcarv.usedcardealer.model.Car} objects to set.
      */
     public void setList(List<Car> list) {
         carList = list;
@@ -39,7 +40,7 @@ public class CarList implements Cloneable {
     
     /**
      * A method that checks if the id passed as a parameter has already occurred.
-     * 
+     * @param id to find.
      * @return true if the given id has already occurred.
      */
     public boolean idExist(int id) {
@@ -54,8 +55,9 @@ public class CarList implements Cloneable {
     /**
      * Method returning the car with the given id parameter, if it exists.
      * If there is no such car, the method throws an exception {@link pcarv.usedcardealer.exception.NoCarException}.
-     * 
+     * @param id id to find.
      * @return {@link pcarv.usedcardealer.model.Car} with the given id, if it exists in the list.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public Car getCarById(int id) throws NoCarException {
         Car result = null;
@@ -72,7 +74,7 @@ public class CarList implements Cloneable {
     }
     
     /**
-     * Return the value of private field "carList".
+     * Returns the value of private field "carList".
      * 
      * @return a list of {@link pcarv.usedcardealer.model.Car} objects from the private field "carList".
      */
@@ -82,6 +84,7 @@ public class CarList implements Cloneable {
 
     /**
      * Method adding to the list from a private field "carList" provided as a parameter {@link pcarv.usedcardealer.model.Car} object.
+     * @param car car to add to the list.
      */
     public void add(Car car) {
         carList.add(car);
@@ -90,6 +93,8 @@ public class CarList implements Cloneable {
     /**
      * Method removing from the list from a private field "carList" provided as a parameter {@link pcarv.usedcardealer.model.Car} object.
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
+     * @param car car to remove from the list.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public void remove(Car car) throws NoCarException {
         if (carList.isEmpty()) {
@@ -101,10 +106,11 @@ public class CarList implements Cloneable {
     /**
      * Method which search and returns list of all {@link pcarv.usedcardealer.model.Car} 
      * objects whose private field "brand" is the same as the one given as a parameter.
-     * from private field "carList" 
+     * from private field "carList". 
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
-     * 
+     * @param brand brand of cars being searched for.
      * @return list of {@link pcarv.usedcardealer.model.Car} objects whose private field "brand" is the same as the one given as a parameter.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public List<Car> searchCarsByBrand(String brand) throws NoCarException {
         List<Car> resultList = new ArrayList<>();
@@ -123,10 +129,11 @@ public class CarList implements Cloneable {
     /**
      * Method which search and returns list of all {@link pcarv.usedcardealer.model.Car} 
      * objects whose private field "model" is the same as the one given as a parameter.
-     * from private field "carList" 
+     * from private field "carList".
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
-     * 
+     * @param model model to find.
      * @return list of {@link pcarv.usedcardealer.model.Car} objects whose private field "model" is the same as the one given as a parameter.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public List<Car> searchCarsByModel(String model) throws NoCarException {
         List<Car> resultList = new ArrayList<>();
@@ -145,10 +152,12 @@ public class CarList implements Cloneable {
     /**
      * Method which search and returns list of all {@link pcarv.usedcardealer.model.Car} 
      * objects whose private field "year" is in range given as a parameter.
-     * from private field "carList" 
+     * from private field "carList".
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
-     * 
+     * @param lowerLimit lower limit of acceptable year range.
+     * @param upperLimit upper limit of acceptable year range.
      * @return list of {@link pcarv.usedcardealer.model.Car} objects whose private field "year" is in range given as a parameter.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public List<Car> searchCarsByYear(int lowerLimit, int upperLimit) throws NoCarException {
         List<Car> resultList = new ArrayList<>();
@@ -169,10 +178,12 @@ public class CarList implements Cloneable {
     /**
      * Method which search and returns list of all {@link pcarv.usedcardealer.model.Car} 
      * objects whose private field "horsepower" is in range given as a parameter.
-     * from private field "carList" 
+     * from private field "carList". 
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
-     * 
+     * @param lowerLimit lower limit of acceptable horsepower range.
+     * @param upperLimit upper limit of acceptable horsepower range.
      * @return list of {@link pcarv.usedcardealer.model.Car} objects whose private field "horsepower" is in range given as a parameter.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public List<Car> searchCarsByPower(int lowerLimit, int upperLimit) throws NoCarException {
         List<Car> resultList = new ArrayList<>();
@@ -193,10 +204,11 @@ public class CarList implements Cloneable {
     /**
      * Method which search and returns list of all {@link pcarv.usedcardealer.model.Car} 
      * objects whose private field "mileage" is in range given as a parameter.
-     * from private field "carList" 
+     * from private field "carList". 
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
-     * 
+     * @param upperLimit upper limit of acceptable mileage value.
      * @return list of {@link pcarv.usedcardealer.model.Car} objects whose private field "mileage" is in range given as a parameter.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public List<Car> searchCarsByMileage(int upperLimit) throws NoCarException {
         List<Car> resultList = new ArrayList<>();
@@ -217,10 +229,12 @@ public class CarList implements Cloneable {
     /**
      * Method which search and returns list of all {@link pcarv.usedcardealer.model.Car} 
      * objects whose private field "price" is in range given as a parameter.
-     * from private field "carList" 
+     * from private field "carList". 
      * Throws exception {@link pcarv.usedcardealer.exception.NoCarException} when private field "carList" is empty.
-     * 
+     * @param lowerLimit lower limit of acceptable price range.
+     * @param upperLimit upper limit of acceptable price range.
      * @return list of {@link pcarv.usedcardealer.model.Car} objects whose private field "price" is in range given as a parameter.
+     * @throws NoCarException {@link pcarv.usedcardealer.exception.NoCarException}.
      */
     public List<Car> searchCarsByPrice(float lowerLimit, float upperLimit) throws NoCarException {
         List<Car> resultList = new ArrayList<>();
@@ -240,7 +254,7 @@ public class CarList implements Cloneable {
 
     /**
      * Method which returns shallow copy of class object. 
-     * @return shallow copy of class object;
+     * @return shallow copy of class object.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
